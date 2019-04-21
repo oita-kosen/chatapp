@@ -8,7 +8,7 @@
   <script type="text/javascript" charset="utf-8">
         $(document).ready(function() {
         namespace = '/test'; //main.pyで指定したnamespace
-        var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port + namespace);
+        var socket = io.connect(location.protocol + '//' + document.domain + namespace);
 
         //テキストエリアはこちらで受信。main.py側からmy_content宛に送られたデータを受け取る
         socket.on('my_content', function(msg) {
