@@ -1,1 +1,1 @@
-web: FLASK_APP=main.py flask run
+web: gunicorn --worker-class eventlet -w 1 main:app
