@@ -18,9 +18,9 @@
         //htmlのフォームがsubmitされた時に、main.pyのreceive_content宛にテキストエリアのid="input_data"の値を送信します。
         $('form#broadcast').submit(function(event) {
             socket.emit('my_broadcast_event', {data: $('#broadcast_data').val()});
-            console.log("protocol"+location.protocol);
-            console.log("domain"+document.domain);
-            console.log("port"+location.port);
+            console.log("protocol" + ':' + location.protocol);
+            console.log("domain" + ':' + document.domain);
+            console.log("port" + ':' + location.port);
             return false;
         });
 
