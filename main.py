@@ -33,7 +33,7 @@ def handle_mqtt_message(client, userdata, message):
         topic=message.topic,
         payload=message.payload.decode()
     )
-    emit('my_content', {'data': data, 'data2': data}, broadcast=True, namespace='/test')
+    emit('my_content', {'data': data['payload'], 'data2': data['payload']}, broadcast=True, namespace='/test')
 
 if __name__ == '__main__':
     socketio.run(app)
