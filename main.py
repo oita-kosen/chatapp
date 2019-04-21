@@ -1,6 +1,7 @@
 from flask import Flask, render_template
 from flask_socketio import SocketIO, emit
 from flask_mqtt import Mqtt
+import requests
 
 app = Flask(__name__)
 app.config['MQTT_BROKER_URL'] = 'm16.cloudmqtt.com'
@@ -17,11 +18,15 @@ mqtt = Mqtt(app)
 app = Flask(__name__)
 socketio = SocketIO(app)
 
+url_news = 'https://script.google.com/macros/s/AKfycbykUsL_lHUS2P6i04ONhzS5O0_qonjCPui1SSFFdwe6X-2QEbA/exec'
+
 @socketio.on('my_broadcast_event', namespace='/test')
 def send_content(sent_data):
-    content = sent_data['data']
-    content2 = sent_data['data2']
-    emit('my_content', {'data': content, 'data2': content2}, broadcast=True)
+    #content = sent_data['data']
+    #content2 = sent_data['data2']
+    response_news = requests.get(url_news)
+    data = response_news.json()
+    emit('my_content', {'title': data['title'], 'url': data['url'],'date': data['date'], 'img': data['img'],'genre': data['genre']}, broadcast=True)
 
 @app.route('/')
 def hello():
