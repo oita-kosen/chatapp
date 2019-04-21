@@ -26,7 +26,7 @@ def send_content(sent_data):
     #content2 = sent_data['data2']
     response_news = requests.get(url_news)
     data = response_news.json()
-    emit('my_content', {'title': , 'url': ,'data': , 'img': ,'genre': }, broadcast=True)
+    emit('my_content', {'title': data['title'], 'url': data['url'],'date': data['date'], 'img': data['img'],'genre': data['genre']}, broadcast=True)
 
 @app.route('/')
 def hello():
