@@ -9,7 +9,7 @@ socket.on('my_content', function(msg) {
 
 //htmlのフォームがsubmitされた時に、main.pyのreceive_content宛にテキストエリアのid="input_data"の値を送信します。
 $('form#broadcast').submit(function(event) {
-    socket.emit('my_broadcast_event', {data: $('#broadcast_data',data2:'#broadcast_data2').val()});
+    socket.emit('my_broadcast_event', {data: $('#broadcast_data').val(),data2:$('#broadcast_data2').val()});
     console.log("protocol" + ':' + location.protocol);
     console.log("domain" + ':' + document.domain);
     console.log("port" + ':' + location.port);
