@@ -43,7 +43,9 @@ def handle_mqtt_message(client, userdata, message):
         topic=message.topic,
         payload=message.payload.decode()
     )
-    emit('my_content', {'data': 'aa', 'data2': 'aa'}, broadcast=True, namespace='/test')
+    response_news = requests.get(url_news)
+    data = response_news.json()
+    emit('my_content', {'title': data['title'], 'url': data['url'],'date': data['date'], 'img': data['img'],'genre': data['genre']}, broadcast=True, namespace='/test')
     mqtt.publish('device/sensor', 'message income')
 
 if __name__ == '__main__':
