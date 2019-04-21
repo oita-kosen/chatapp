@@ -4,10 +4,14 @@ from flask_mqtt import Mqtt
 
 app = Flask(__name__)
 app.config['MQTT_BROKER_URL'] = 'm16.cloudmqtt.com'
-app.config['MQTT_BROKER_PORT'] = 20145
+app.config['MQTT_BROKER_PORT'] = 10145
 app.config['MQTT_USERNAME'] = 'bqntusbe'
 app.config['MQTT_PASSWORD'] = 'FSeMpNi8kNhF'
 app.config['MQTT_REFRESH_TIME'] = 1.0  # refresh time in seconds
+app.config['MQTT_TLS_ENABLED'] = False
+#app.config['MQTT_TLS_INSECURE'] = True
+#app.config['MQTT_TLS_CA_CERTS'] = 'ca.crt'
+
 mqtt = Mqtt(app)
 
 app = Flask(__name__)
