@@ -5,12 +5,12 @@ import requests
 
 app = Flask(__name__)
 app.config['MQTT_BROKER_URL'] = 'm16.cloudmqtt.com'
-app.config['MQTT_BROKER_PORT'] = 10145
+app.config['MQTT_BROKER_PORT'] = 20145
 app.config['MQTT_USERNAME'] = 'bqntusbe'
 app.config['MQTT_PASSWORD'] = 'FSeMpNi8kNhF'
-app.config['MQTT_REFRESH_TIME'] = 1.0  # refresh time in seconds
-app.config['MQTT_TLS_ENABLED'] = False
-#app.config['MQTT_TLS_INSECURE'] = True
+app.config['MQTT_KEEPALIVE'] = 5
+app.config['MQTT_TLS_ENABLED'] = True
+app.config['MQTT_TLS_INSECURE'] = True
 #app.config['MQTT_TLS_CA_CERTS'] = 'ca.crt'
 
 mqtt = Mqtt(app)
@@ -39,6 +39,7 @@ def handle_connect(client, userdata, flags, rc):
 
 @mqtt.on_message()
 def handle_mqtt_message(client, userdata, message):
+    mqtt.publish('device/sensor', 'message income')
     data = dict(
         topic=message.topic,
         payload=message.payload.decode()
@@ -46,7 +47,6 @@ def handle_mqtt_message(client, userdata, message):
     response_news = requests.get(url_news)
     data = response_news.json()
     emit('my_content', {'title': data['title'], 'url': data['url'],'date': data['date'], 'img': data['img'],'genre': data['genre']}, broadcast=True, namespace='/test')
-    mqtt.publish('device/sensor', 'message income')
 
 if __name__ == '__main__':
     socketio.run(app)
