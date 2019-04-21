@@ -30,6 +30,7 @@ def hello():
 @mqtt.on_connect()
 def handle_connect(client, userdata, flags, rc):
     mqtt.subscribe('device/sensor')
+    mqtt.publish('device/sensor', 'hello world!')
 
 @mqtt.on_message()
 def handle_mqtt_message(client, userdata, message):
@@ -37,7 +38,8 @@ def handle_mqtt_message(client, userdata, message):
         topic=message.topic,
         payload=message.payload.decode()
     )
-    emit('my_content', {'data': data['payload'], 'data2': data['payload']}, broadcast=True, namespace='/test')
+    emit('my_content', {'data': 'aa', 'data2': 'aa'}, broadcast=True, namespace='/test')
+    mqtt.publish('device/sensor', 'message income')
 
 if __name__ == '__main__':
     socketio.run(app)
